@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Ambil palet warna dan kode HEX dari gambar. Unggah gambar, lihat warnanya, lalu salin kode yang kamu perlukan.">
+  <meta name="theme-color" content="#233ee9">
+  <title>Palet — Warna dari gambarmu</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23233ee9'/%3E%3Cpath d='M8 8h6v16H8z' fill='white'/%3E%3Cpath d='M17 8h7v10h-7z' fill='%23d6f35b'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="./style.css">
+  <script src="./vendor/color-thief.umd.js" defer></script>
+  <script src="./script.js" defer></script>
+</head>
+<body>
+  <div class="page">
+    <header class="site-header">
+      <a class="brand" href="./" aria-label="Palet, halaman utama">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span>palet<span class="brand-dot">.</span></span>
+      </a>
+      <span class="header-note">Satu gambar. Banyak warna.</span>
+    </header>
+
+    <main>
+      <div class="intro">
+        <div>
+          <p class="eyebrow">EKSTRAKSI PALET WARNA</p>
+          <h1>Warna dari gambarmu<span>.</span></h1>
+          <p class="intro-text">Pilih gambar, temukan paletnya, simpan kode warnanya.</p>
+        </div>
+        <span class="privacy-label">Diproses di browser kamu</span>
+      </div>
+
+      <div class="workspace">
+        <section class="source-panel" aria-labelledby="source-title">
+          <div class="section-heading">
+            <h2 id="source-title"><span class="step">01</span> Gambar sumber</h2>
+            <button id="reset-button" class="text-button" type="button" hidden>Hapus</button>
+          </div>
+
+          <div id="drop-zone" class="drop-zone">
+            <input id="file-input" type="file" accept="image/jpeg,image/png,image/webp,image/gif,image/avif,image/bmp" hidden>
+            <div id="upload-prompt" class="upload-prompt">
+              <span class="image-icon" aria-hidden="true">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
+              </span>
+              <h3>Mulai dari satu gambar</h3>
+              <p>Tarik gambar ke sini atau pilih dari perangkatmu.</p>
+              <button class="primary-button" id="upload-button" type="button">Pilih gambar</button>
+              <span class="file-hint">JPG, PNG, WebP, GIF, AVIF, BMP · Maks. 15 MB</span>
+            </div>
+            <figure id="preview-wrapper" class="preview-wrapper" hidden>
+              <img id="preview-image" alt="Pratinjau gambar yang dipilih">
+              <button id="change-button" class="change-button" type="button">Ganti gambar</button>
+            </figure>
+            <div id="loading-overlay" class="loading-overlay" hidden>
+              <span class="spinner" aria-hidden="true"></span>
+              <span>Membaca warna…</span>
+            </div>
+          </div>
+
+          <div class="source-caption">
+            <span id="file-name">Belum ada gambar</span>
+            <span id="image-dimensions">—</span>
+          </div>
+
+          <form id="url-form" class="url-form">
+            <label for="image-url">Atau gunakan tautan gambar</label>
+            <div class="url-controls">
+              <input id="image-url" type="url" placeholder="https://contoh.com/foto.jpg" aria-describedby="url-hint" autocomplete="off">
+              <button id="url-button" type="submit" class="secondary-button">Muat</button>
+            </div>
+            <p id="url-hint" class="help-text">Gunakan tautan langsung. Jika situs menolak akses, unduh gambarnya lalu unggah di sini.</p>
+          </form>
+          <p id="error-message" class="error-message" role="alert" hidden></p>
+        </section>
+
+        <section id="palette-panel" class="palette-panel" aria-labelledby="palette-title" aria-busy="false">
+          <div class="section-heading">
+            <h2 id="palette-title"><span class="step">02</span> Palet warna</h2>
+            <span id="color-count" class="small-label">0 warna</span>
+          </div>
+
+          <div id="empty-palette" class="empty-palette">
+            <div class="empty-strips" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+            <div class="empty-caption"><h3>Paletmu dimulai di sini</h3><p>Warna dan kode HEX akan muncul otomatis setelah gambar dipilih.</p></div>
+          </div>
+
+          <div id="palette-result" hidden>
+            <div id="color-ribbon" class="color-ribbon" aria-hidden="true"></div>
+            <div class="result-heading"><p>Klik warna untuk menyalin HEX</p><button id="copy-all-button" class="text-button" type="button">Salin semua</button></div>
+            <div id="swatch-grid" class="swatch-grid"></div>
+            <div class="dominant-card">
+              <span id="dominant-chip" class="dominant-chip" aria-hidden="true"></span>
+              <div><span class="small-label">Warna dominan</span><strong id="dominant-hex"></strong></div>
+              <button id="copy-dominant-button" type="button" class="text-button">Salin</button>
+            </div>
+            <p class="palette-note">Palet merangkum warna utama gambar. Jumlahnya bisa kurang dari 6 jika warna gambar terbatas.</p>
+          </div>
+        </section>
+      </div>
+      <p id="status-message" class="sr-only" role="status" aria-live="polite"></p>
+      <noscript><p class="error-message">Aktifkan JavaScript untuk mengambil warna dari gambar.</p></noscript>
+    </main>
+
+    <footer>
+      <span>Palet · Pengolahan Citra Digital</span>
+      <span>Menggunakan <a href="https://github.com/lokesh/color-thief" target="_blank" rel="noopener noreferrer">Color Thief</a></span>
+    </footer>
+  </div>
+  <div id="toast" class="toast" role="status" hidden></div>
+</body>
+</html>
