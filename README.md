@@ -10,6 +10,10 @@ Implementasi tugas UTS Pengolahan Citra Digital menggunakan HTML, CSS, JavaScrip
 4. Klik **Pilih gambar**, lalu pilih gambar dari perangkat.
 5. Palet warna dan kode HEX muncul otomatis. Klik kotak warna untuk menyalin kodenya.
 
+HASIL
+<img width="1492" height="913" alt="image" src="https://github.com/user-attachments/assets/27317150-9566-4359-9cd6-8055dafa5abd" />
+
+
 Tidak perlu memasang Node.js atau menjalankan `npm install`. Library sudah disertakan di folder `vendor`, sehingga unggah gambar lokal tidak membutuhkan koneksi internet.
 
 Jangan memindahkan `index.html` sendirian: `style.css`, `script.js`, dan folder `vendor` harus tetap berada di lokasi relatif yang sama. Jika memakai VS Code, aplikasi juga bisa dibuka melalui Live Server.
